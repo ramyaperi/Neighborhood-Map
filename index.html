@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+  <nav id="custom_controls " class="navbar-light bg-faded navbar-left dropdown" role="navigation">
+      <button class="navbar-header navbar-toggler-right dropdown-toggle" data-bind="click:menubuttonclicked"
+              type="button" data-toggle="dropdown" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="nav flex-column dropdown-menu">
+              <li class="nav-item">
+                  <a class="nav-link active" href="#">Active</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+
+  <!--Map div with custom binding   -->
+  <div id="map" data-bind="map:mapView"></div>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>
+    <script src="js/mapview.js"></script>
+  </body>
+
+</html>
