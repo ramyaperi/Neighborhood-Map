@@ -9,33 +9,54 @@
   </head>
   <body>
 
-  <nav id="custom_controls " class="navbar-light bg-faded navbar-left dropdown" role="navigation">
-      <button class="navbar-header navbar-toggler-right dropdown-toggle" data-bind="click:menubuttonclicked"
-              type="button" data-toggle="dropdown" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="nav flex-column dropdown-menu">
-              <li class="nav-item">
-                  <a class="nav-link active" href="#">Active</a>
+  <!-- Page Content -->
+
+  <div id="page-content-wrapper">
+      <div class="container-fluid">
+          <a href="#menu-toggle" class="btn btn-secondary glyphicon glyphicon-menu-hamburger" id="menu-toggle"
+             data-bind="click:menubuttonclicked"></a>
+      </div>
+  </div>
+
+
+  <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+          <ul class="sidebar-nav">
+              <li class="sidebar-brand">
+                  <a href="#">
+                      Start Bootstrap
+                  </a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+              <li>
+                  <a href="#">Dashboard</a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+              <li>
+                  <a href="#">Shortcuts</a>
+              </li>
+              <li>
+                  <a href="#">Overview</a>
+              </li>
+              <li>
+                  <a href="#">Events</a>
+              </li>
+              <li>
+                  <a href="#">About</a>
+              </li>
+              <li>
+                  <a href="#">Services</a>
+              </li>
+              <li>
+                  <a href="#">Contact</a>
               </li>
           </ul>
       </div>
-  </nav>
-
-
-  <!--Map div with custom binding   -->
-  <div id="map" data-bind="map:mapView"></div>
-    <script src="js/lib/knockout-3.2.0.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>
-    <script src="js/mapview.js"></script>
+      <!-- /#sidebar-wrapper -->
+      <!--Map div with custom binding   -->
+      <div id="map" data-bind="map:mapView"></div>
+      <script src="js/lib/knockout-3.2.0.js"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>
+      <script src="js/mapview.js"></script>
   </body>
 
 </html>

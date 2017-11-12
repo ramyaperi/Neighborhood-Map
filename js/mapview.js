@@ -14,7 +14,10 @@ var mapViewModel = function() {
     self.mapView = ko.observable(mapModel);
 
     self.menubuttonclicked = function(){
-
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
     };
 }
 
