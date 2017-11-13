@@ -1,62 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
 
   <!-- Page Content -->
 
-  <div id="page-content-wrapper">
-      <div class="container-fluid">
-          <a href="#menu-toggle" class="btn btn-secondary glyphicon glyphicon-menu-hamburger" id="menu-toggle"
-             data-bind="click:menubuttonclicked"></a>
+  <nav id="sidebar">
+      <div id="dismiss" data-bind="click:mapselected">
+          <i class="glyphicon glyphicon-arrow-left"></i>
       </div>
-  </div>
-
-
-  <div id="wrapper">
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-          <ul class="sidebar-nav">
-              <li class="sidebar-brand">
-                  <a href="#">
-                      Start Bootstrap
-                  </a>
-              </li>
-              <li>
-                  <a href="#">Dashboard</a>
-              </li>
-              <li>
-                  <a href="#">Shortcuts</a>
-              </li>
-              <li>
-                  <a href="#">Overview</a>
-              </li>
-              <li>
-                  <a href="#">Events</a>
-              </li>
-              <li>
-                  <a href="#">About</a>
-              </li>
-              <li>
-                  <a href="#">Services</a>
-              </li>
-              <li>
-                  <a href="#">Contact</a>
-              </li>
-          </ul>
+      <div class="sidebar-header">
+          <h3>Must Visit in Munich</h3>
       </div>
-      <!-- /#sidebar-wrapper -->
-      <!--Map div with custom binding   -->
-      <div id="map" data-bind="map:mapView"></div>
-      <script src="js/lib/knockout-3.2.0.js"></script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>
-      <script src="js/mapview.js"></script>
+      <ul class="list-unstyled components">
+          <li>
+              <a href="#">Portfolio</a>
+          </li>
+          <li>
+              <a href="#">Contact</a>
+          </li>
+      </ul>
+  </nav>
+
+  <button id="sidebarCollapse" class="btn glyphicon glyphicon-align-left glyphicon-glyphicon-list"
+          data-bind="click:menuselected">
+  </button>
+  <div class="overlay" data-bind="click:mapselected"></div>
+  <!--Map div with custom binding   -->
+  <div id="map" data-bind="map:mapView"></div>
+  <script src="js/lib/knockout-3.2.0.js"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>
+  <script src="js/mapview.js"></script>
   </body>
 
 </html>
