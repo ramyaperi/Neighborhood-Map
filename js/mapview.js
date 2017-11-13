@@ -17,7 +17,8 @@ var model = {
                 {
                     lat: 48.164308,
                     lng: 11.605395
-                }
+                },
+            markerobj: null
         },
         {
             title: "Surfers corner",
@@ -25,7 +26,8 @@ var model = {
                 {
                     lat: 48.143733,
                     lng: 11.588045
-                }
+                },
+            markerobj: null
         },
         {
             title: "Marienplatz/Town Hall",
@@ -33,7 +35,8 @@ var model = {
                 {
                     lat: 48.1383715,
                     lng: 11.5708304
-                }
+                },
+            markerobj: null
         },
         {
             title: "St. Peter's Church / Peterskirche",
@@ -41,7 +44,8 @@ var model = {
                 {
                     lat: 48.1367954,
                     lng: 11.5720024
-                }
+                },
+            markerobj: null
         },
         {
             title: "Hofbräuhaus",
@@ -49,16 +53,19 @@ var model = {
                 {
                     lat: 48.1371928,
                     lng: 11.5764119
-                }
-        },
+                },
+            markerobj: null
+        }
 
-    ],
-    currentmarkers: []
+    ]
 };
 //ViewModel for map
 var mapViewModel = function() {
     var self = this;
     self.mapView = ko.observable(model);
+    self.markers = ko.observableArray(model.mapMarkers);
+
+    console.log(self.markers);
 
     self.mapselected = function () {
         // hide the sidebar
@@ -97,14 +104,15 @@ custom binding to bind the google map object
             };
 
             mapObj.googleMap = new google.maps.Map(element, mapOptions);
-            model.mapMarkers.forEach(function (marker) {
+            model.mapMarkers.forEach(function (marker, index) {
                 mapObj.marker = new google.maps.Marker({
 
                     position: marker.position,
                     title: marker.title,
-                    map: mapObj.googleMap
+                    map: mapObj.googleMap,
+
                 });
-                // model.currentmarkers.push(mapObj.marker);
+                model.mapMarkers[index].markerobj = mapObj.marker;
             });
 
         }

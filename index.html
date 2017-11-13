@@ -18,12 +18,9 @@
       <div class="sidebar-header">
           <h3>Must Visit in Munich</h3>
       </div>
-      <ul class="list-unstyled components">
+      <ul class="list-unstyled components" data-bind="foreach: markers">
           <li>
-              <a href="#">Portfolio</a>
-          </li>
-          <li>
-              <a href="#">Contact</a>
+              <a href="#" data-bind="text: title"></a>
           </li>
       </ul>
   </nav>
