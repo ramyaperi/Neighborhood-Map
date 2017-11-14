@@ -27,6 +27,18 @@ body {
     box-shadow: none;
 }
 
+#innericon {
+    position: relative;
+}
+
+#innericon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    right: 0px;
+    color: #808080;
+}
+
 #sidebar {
     width: 250px;
     position: fixed;

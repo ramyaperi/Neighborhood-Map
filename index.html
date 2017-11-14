@@ -18,8 +18,11 @@
       <div class="sidebar-header">
           <h3>Must Visit in Munich</h3>
       </div>
-      <input class="form-control" id="myInput" type="text" placeholder="Search.."
+      <div id="innericon">
+          <i class="glyphicon glyphicon-filter"></i>
+          <input name="search" class="form-control " id="myInput" type="text" placeholder="Search.."
              data-bind="textInput : keyword ,event: {keyup: filterMarkerList}">
+      </div>
       <ul class="list-unstyled components" id="markerlist" data-bind="foreach: markers">
           <li>
               <a href="#" data-bind="text: title,click:$parent.animateMarker"></a>

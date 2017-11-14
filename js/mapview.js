@@ -18,7 +18,8 @@ var model = {
                     lat: 48.164308,
                     lng: 11.605395
                 },
-            markerobj: null
+            markerobj: null,
+            info: "Very popular scenic park, more internaitonal than its name would suggest, it contains a Greek temple, Chinese pagoda and Japanese tea house."
         },
         {
             title: "Surfers corner",
@@ -27,7 +28,8 @@ var model = {
                     lat: 48.143733,
                     lng: 11.588045
                 },
-            markerobj: null
+            markerobj: null,
+            info: "There's year-round surfing on this continuous wave on the Englischer Garten's Eisbach River,legalized in the summer of 2010 only for experienced."
         },
         {
             title: "Marienplatz/Town Hall",
@@ -36,7 +38,9 @@ var model = {
                     lat: 48.1383715,
                     lng: 11.5708304
                 },
-            markerobj: null
+            markerobj: null,
+            info: "This prominent public square, the largest in Munich, still stands as the center of social activity in the city, much as it has throughout history.",
+
         },
         {
             title: "St. Peter's Church / Peterskirche",
@@ -45,7 +49,9 @@ var model = {
                     lat: 48.1367954,
                     lng: 11.5720024
                 },
-            markerobj: null
+            markerobj: null,
+            info: "This 11th-century cathedral, the city's oldest remaining church, is best known for its beautiful golden interior.",
+
         },
         {
             title: "Hofbräuhaus",
@@ -54,7 +60,8 @@ var model = {
                     lat: 48.1371928,
                     lng: 11.5764119
                 },
-            markerobj: null
+            markerobj: null,
+            info: "This famous beer hall, founded in the late 16th century, is an extremely popular destination for tourists looking to experience local culture.",
         }
 
     ]
@@ -89,10 +96,11 @@ var mapViewModel = function() {
     };
 
     self.animateMarker = function (data, event) {
-        console.log(data.markerobj);
-        data.markerobj.setAnimation(google.maps.Animation.DROP);
         self.mapselected();
+        data.markerobj.setAnimation(google.maps.Animation.DROP);
+        new google.maps.event.trigger(data.markerobj, 'click');
     };
+
 }
 
 
@@ -103,6 +111,7 @@ custom binding to bind the google map object
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var model = ko.utils.unwrapObservable(valueAccessor());
             var mapObj = model.maplocation;
+            var infowindow = new google.maps.InfoWindow();
             var latLng = new google.maps.LatLng(
                 ko.utils.unwrapObservable(mapObj.lat),
                 ko.utils.unwrapObservable(mapObj.lng));
@@ -117,6 +126,8 @@ custom binding to bind the google map object
 
             mapObj.googleMap = new google.maps.Map(element, mapOptions);
             model.mapMarkers.forEach(function (marker, index) {
+
+
                 mapObj.marker = new google.maps.Marker({
 
                     position: marker.position,
@@ -124,7 +135,20 @@ custom binding to bind the google map object
                     map: mapObj.googleMap,
 
                 });
+
                 model.mapMarkers[index].markerobj = mapObj.marker;
+                //model.mapMarkers[index].infowindow = infowindow;
+
+                mapObj.marker.addListener('click', function () {
+                    //creating a info window
+                    infowindow.setOptions({
+                        content: '<div> <h3>' + marker.title + '</h3><p>' + marker.info + '</p></div>',
+                        position: marker.position,
+                        maxWidth: 200
+                    });
+
+                    infowindow.open(mapObj.googleMap, this);
+                });
             });
 
         }
