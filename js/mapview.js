@@ -64,8 +64,7 @@ var mapViewModel = function() {
     var self = this;
     self.mapView = ko.observable(model);
     self.markers = ko.observableArray(model.mapMarkers);
-
-    console.log(self.markers);
+    self.keyword = ko.observable("");
 
     self.mapselected = function () {
         // hide the sidebar
@@ -80,6 +79,19 @@ var mapViewModel = function() {
         $('.overlay').fadeIn();
         $('.collapse.in').toggleClass('in');
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    };
+
+    self.filterMarkerList = function () {
+        var value = (self.keyword()).toLowerCase();
+        $("#markerlist li").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    };
+
+    self.animateMarker = function (data, event) {
+        console.log(data.markerobj);
+        data.markerobj.setAnimation(google.maps.Animation.DROP);
+        self.mapselected();
     };
 }
 
