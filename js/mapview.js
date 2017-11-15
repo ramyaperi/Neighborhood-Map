@@ -2,12 +2,13 @@ $(document).ready(function () {
     ko.applyBindings(viewModel);
 });
 
+
 //map model for init
 var model = {
 //map model for init
     maplocation: {
-        lat: 48.135268,
-        lng: 11.583283
+        lat: 48.165086,
+        lng: 11.553062
     },
 
     mapMarkers: [
@@ -19,16 +20,19 @@ var model = {
                     lng: 11.605395
                 },
             markerobj: null,
+            flickrimg: [],
             info: "Very popular scenic park, more internaitonal than its name would suggest, it contains a Greek temple, Chinese pagoda and Japanese tea house."
+
         },
         {
-            title: "Surfers corner",
+            title: "Eisbach Wave",
             position:
                 {
                     lat: 48.143733,
                     lng: 11.588045
                 },
             markerobj: null,
+            flickrimg: [],
             info: "There's year-round surfing on this continuous wave on the Englischer Garten's Eisbach River,legalized in the summer of 2010 only for experienced."
         },
         {
@@ -39,6 +43,7 @@ var model = {
                     lng: 11.5708304
                 },
             markerobj: null,
+            flickrimg: [],
             info: "This prominent public square, the largest in Munich, still stands as the center of social activity in the city, much as it has throughout history.",
 
         },
@@ -50,6 +55,7 @@ var model = {
                     lng: 11.5720024
                 },
             markerobj: null,
+            flickrimg: [],
             info: "This 11th-century cathedral, the city's oldest remaining church, is best known for its beautiful golden interior.",
 
         },
@@ -61,7 +67,41 @@ var model = {
                     lng: 11.5764119
                 },
             markerobj: null,
+            flickrimg: [],
             info: "This famous beer hall, founded in the late 16th century, is an extremely popular destination for tourists looking to experience local culture.",
+        },
+        {
+            title: "Frauenkirche",
+            position:
+                {
+                    lat: 48.1386097,
+                    lng: 11.5035857
+                },
+            markerobj: null,
+            flickrimg: [],
+            info: "The Frauenkirche is a church in the Bavarian city of Munich that serves as the cathedral of the Archdiocese of Munich and Freising and seat of its Archbishop. It is a landmark and is considered a symbol of the Bavarian capital city."
+        },
+        {
+            title: "Olympiapark",
+            position:
+                {
+                    lat: 48.1754433,
+                    lng: 11.4817573
+                },
+            markerobj: null,
+            flickrimg: [],
+            info: "Olympiahalle is a multi-purpose arena located in Am Riesenfeld in Munich, Germany, part of Olympiapark."
+        },
+        {
+            title: "Viktualienmarkt",
+            position:
+                {
+                    lat: 48.135093,
+                    lng: 11.5062152
+                },
+            markerobj: null,
+            flickrimg: [],
+            info: "The Viktualienmarkt is a daily food market and a square in the center of Munich, Germany. The Viktualienmarkt developed from an original farmers' market to a popular market for gourmets."
         }
 
     ]
@@ -101,6 +141,30 @@ var mapViewModel = function() {
         new google.maps.event.trigger(data.markerobj, 'click');
     };
 
+    //get top 10 image url from flicker for each location
+    ko.computed(function () {
+
+        for (var index = 0, leng = model.mapMarkers.length; index < leng; index++) {
+
+            marker = model.mapMarkers[index];
+            url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&' +
+                'api_key=45b5c4e7658a4c9fba59f026aa028a75&lat=' + marker.position.lat + '&lon=' +
+                marker.position.lng + '&per_page=10&page=1&format=json&nojsoncallback=1';
+
+            $.getJSON(url, {"text": marker.title}, (function () {
+                var currentindex = index;
+                //call back function so that index can be accessed
+                return function (data) {
+                    photoslist = data.photos.photo;
+                    for (var i = 0, len = photoslist.length; i < len; i++) {
+                        model.mapMarkers[currentindex].flickrimg.push('https://farm' + photoslist[i].farm + '.staticflickr.com/' + photoslist[i].server + '/' + photoslist[i].id + '_' + photoslist[i].secret + '.jpg');
+                    }
+                }
+
+            })());
+        }
+    }, this);
+
 }
 
 
@@ -137,7 +201,6 @@ custom binding to bind the google map object
                 });
 
                 model.mapMarkers[index].markerobj = mapObj.marker;
-                //model.mapMarkers[index].infowindow = infowindow;
 
                 mapObj.marker.addListener('click', function () {
                     //creating a info window
@@ -157,5 +220,6 @@ custom binding to bind the google map object
 
 
 var viewModel = new mapViewModel();
+
 
 
