@@ -44,7 +44,7 @@ var model = {
                 },
             markerobj: null,
             flickrimg: [],
-            info: "This prominent public square, the largest in Munich, still stands as the center of social activity in the city, much as it has throughout history.",
+            info: "This prominent public square, the largest in Munich, still stands as the center of social activity in the city, much as it has throughout history."
 
         },
         {
@@ -56,7 +56,7 @@ var model = {
                 },
             markerobj: null,
             flickrimg: [],
-            info: "This 11th-century cathedral, the city's oldest remaining church, is best known for its beautiful golden interior.",
+            info: "This 11th-century cathedral, the city's oldest remaining church, is best known for its beautiful golden interior."
 
         },
         {
@@ -68,7 +68,7 @@ var model = {
                 },
             markerobj: null,
             flickrimg: [],
-            info: "This famous beer hall, founded in the late 16th century, is an extremely popular destination for tourists looking to experience local culture.",
+            info: "This famous beer hall, founded in the late 16th century, is an extremely popular destination for tourists looking to experience local culture."
         },
         {
             title: "Frauenkirche",
@@ -121,7 +121,7 @@ var mapViewModel = function() {
     //Flicker images observable
     self.currentMarkerImgs = ko.computed(function () {
         var marker = model.currentmarker();
-        if (marker == null) {
+        if (marker === null) {
             return null;
         }
         return marker.flickrimg;
@@ -153,7 +153,7 @@ var mapViewModel = function() {
     //search function
     self.filterMarkerList = function () {
         var value = (self.keyword()).toLowerCase();
-        if (value.length == 0) {
+        if (value.length === 0) {
             $("#markerlist li").filter(function () {
                 $(this).show();
             });
@@ -166,7 +166,7 @@ var mapViewModel = function() {
     };
 
     //animate marker when a marker is selected from the list
-    self.animateMarker = function (data, event) {
+    self.animateMarker = function (data) {
         self.mapselected();
         self.keyword("");
         self.filterMarkerList();
@@ -232,7 +232,7 @@ var mapViewModel = function() {
                         for (var i = 0, len = photoslist.length; i < len; i++) {
                             currentmarker.flickrimg.push('https://farm' + photoslist[i].farm + '.staticflickr.com/' + photoslist[i].server + '/' + photoslist[i].id + '_' + photoslist[i].secret + '.jpg');
                         }
-                    }
+                    };
 
 
                 })())
@@ -249,7 +249,7 @@ var mapViewModel = function() {
 
     }
 
-}
+};
 
 
 /*
@@ -294,7 +294,7 @@ var mapViewModel = function() {
 
                     position: marker.position,
                     title: marker.title,
-                    map: mapObj.googleMap,
+                    map: mapObj.googleMap
 
                 });
 
