@@ -10,7 +10,7 @@
   <body>
 
   <!-- Page Content -->
-
+  <p id=" errormessage" data-bind="text: errormessage"></p>
   <nav id="sidebar">
       <div id="dismiss" data-bind="click:mapselected">
           <i class="glyphicon glyphicon-arrow-left"></i>
@@ -19,9 +19,12 @@
           <h3>Must Visit in Munich</h3>
       </div>
       <div id="innericon">
-          <i class="glyphicon glyphicon-filter"></i>
+          <form id="searchform" data-bind="submit: showmultiplemarkers">
           <input name="search" class="form-control " id="myInput" type="text" placeholder="Search.."
-             data-bind="textInput : keyword ,event: {keyup: filterMarkerList}">
+                 data-bind="textInput : keyword ,event: {keyup: filterMarkerList }">
+          </form>
+          <button form="searchform" class="glyphicon glyphicon-filter" type="submit"></button>
+
       </div>
       <ul class="list-unstyled components" id="markerlist" data-bind="foreach: markers">
           <li>
@@ -33,10 +36,19 @@
   <button id="sidebarCollapse" class="btn glyphicon glyphicon-align-left glyphicon-glyphicon-list"
           data-bind="click:menuselected">
   </button>
-  
+
   <div class="overlay" data-bind="click:mapselected"></div>
   <!--Map div with custom binding   -->
   <div id="map" data-bind="map:mapView"></div>
+  <div class="row-fluid">
+      <div class="cover-container" data-bind="foreach: currentMarkerImgs">
+          <!-- START PANEL -->
+          <div class="cover-item" data-bind="style:{ 'background-image':'url('+ $data+')'}"></div>
+          <!-- END PANEL -->
+      </div>
+  </div>
+  <p class="bottom-center">This product uses the Flickr API but is not endorsed or certified by Flickr.</p>
+
   <script src="js/lib/knockout-3.2.0.js"></script>
   <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj6TBUXK_1OZ8OGmRB6EnibIUNkYrOsNA"></script>

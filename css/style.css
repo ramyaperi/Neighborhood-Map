@@ -19,6 +19,22 @@ body {
     z-index: 5;
 }
 
+#errormessage {
+    position: relative;
+    z-index: 20;
+    padding: 20%;
+}
+
+.bottom-center {
+    position: absolute;
+    z-index: 15;
+    bottom: 0;
+    align-content: center;
+    left: 30%;
+    font-family: Arial, sans-serif;
+    font-size: x-small;
+}
+
 /* side bar and button  */
 .btn {
     z-index: 10;
@@ -35,7 +51,6 @@ body {
 #innericon .glyphicon {
     position: absolute;
     padding: 10px;
-    pointer-events: none;
     right: 0px;
     color: #808080;
 }
@@ -143,20 +158,19 @@ ul ul a {
 }
 
 /* photos  */
-.row-bottom {
-    z-index: 25;
-    bottom: 0;
-}
-
 .cover-container {
-    height: 180px;
-    width: 100%;
+    max-height: 180px;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
+    z-index: 25;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
 }
-
 .cover-item {
+    z-index: 30;
     position: relative;
     display: inline-block;
     margin: 8px 8px;
