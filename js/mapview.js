@@ -121,7 +121,7 @@ var mapViewModel = function() {
     //Flicker images observable
     self.currentMarkerImgs = ko.computed(function () {
         var marker = model.currentmarker();
-        if (marker === null) {
+        if (marker === undefined || marker === null) {
             return null;
         }
         return marker.flickrimg;
@@ -194,48 +194,20 @@ var mapViewModel = function() {
         self.keyword("");
     };
 
-    //get top 10 image url from flicker for each location
-    //not computed array as the marker is not editable so needs to be computed only once.
-    leng = model.mapMarkers.length;
-    for (var index = 0; index < leng; index++) {
-        marker = model.mapMarkers[index];
-        url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&' +
-            'api_key=45b5c4e7658a4c9fba59f026aa028a75&lat=' + marker.position.lat + '&lon=' +
-            marker.position.lng + '&per_page=15&page=1&format=json&nojsoncallback=1';
+    //Function calles get jaon method and populates the data for each marker
 
-
-        /*	$.getJSON(url,
-                {
-                    "text": marker.title
-                }, (function () {
-              var currentmarker = marker;
-
-              return function (data) {
-                  photoslist = data.photos.photo;
-                  for (var i = 0, len = photoslist.length; i < len; i++) {
-                      currentmarker.flickrimg.push('https://farm' + photoslist[i].farm + '.staticflickr.com/' + photoslist[i].server + '/' + photoslist[i].id + '_' + photoslist[i].secret + '.jpg');
-                  }
-              }
-
-        })());*/
-
-
+    self.loadflickrdata = function (url, marker) {
         try {
             $.getJSON(url,
                 {
                     "text": marker.title
-                }, (function (data) {
-                    var currentmarker = marker;
-
-                    return function (data) {
-                        photoslist = data.photos.photo;
-                        for (var i = 0, len = photoslist.length; i < len; i++) {
-                            currentmarker.flickrimg.push('https://farm' + photoslist[i].farm + '.staticflickr.com/' + photoslist[i].server + '/' + photoslist[i].id + '_' + photoslist[i].secret + '.jpg');
-                        }
-                    };
-
-
-                })())
+                }).done(function (data) {
+                var currentmarker = marker;
+                photoslist = data.photos.photo;
+                for (var i = 0, len = photoslist.length; i < len; i++) {
+                    currentmarker.flickrimg.push('https://farm' + photoslist[i].farm + '.staticflickr.com/' + photoslist[i].server + '/' + photoslist[i].id + '_' + photoslist[i].secret + '.jpg');
+                }
+            })
                 .fail(function (e, textstatus, error) {
                     model.errormessage("Please check your internet OR refresh in some time.");
                 });
@@ -245,9 +217,22 @@ var mapViewModel = function() {
             return;
 
         }
+    }
+
+    //get top 10 image url from flicker for each location
+    //not computed array as the marker is not editable so needs to be computed only once.
+    leng = model.mapMarkers.length;
+    for (var index = 0; index < leng; index++) {
+        marker = model.mapMarkers[index];
+        url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&' +
+            'api_key=45b5c4e7658a4c9fba59f026aa028a75&lat=' + marker.position.lat + '&lon=' +
+            marker.position.lng + '&per_page=15&page=1&format=json&nojsoncallback=1';
+
+        self.loadflickrdata(url, marker);
 
 
     }
+
 
 };
 
