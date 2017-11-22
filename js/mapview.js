@@ -217,7 +217,7 @@ var mapViewModel = function() {
             return;
 
         }
-    }
+    };
 
     //get top 10 image url from flicker for each location
     //not computed array as the marker is not editable so needs to be computed only once.
