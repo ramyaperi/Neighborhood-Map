@@ -20,9 +20,11 @@ body {
 }
 
 #errormessage {
-    position: relative;
-    z-index: 20;
-    padding: 20%;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    color: #FF0000;
 }
 
 .bottom-center {
@@ -51,7 +53,7 @@ body {
 #innericon .glyphicon {
     position: absolute;
     padding: 10px;
-    right: 0px;
+    right: 0;
     color: #808080;
 }
 
