@@ -16,6 +16,7 @@ var mapViewModel = function () {
     //self.markers = ko.observableArray(model.mapMarkers);
     self.keyword = ko.observable("");
     self.errormessage = model.errormessage;
+    self.showsidebar = ko.observable(false);
 
     //Flicker images observable
     self.currentMarkerImgs = ko.computed(function () {
@@ -78,31 +79,42 @@ var mapViewModel = function () {
 
     });
 
-    //when map is clicked after menu selection
-    self.mapselected = function () {
-        // hide the sidebar
-        $('#sidebar').removeClass('active');
-        // fade out the overlay
-        $('.overlay').fadeOut();
-    };
-
-    //when  menu button is clicked
     self.menuselected = function () {
-        $('#sidebar').addClass('active');
-        // fade in the overlay
-        $('.overlay').fadeIn();
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-        $("#markerlist ul").show();
-        $("#markerlist li").each(function () {
-            marker = ko.dataFor(this);
-            marker.markerobj.setVisible(true);
-        });
-
+        self.showsidebar(true);
+        //$('.overlay').fadeIn();
     };
+
+    self.mapselected = function () {
+        self.showsidebar(false);
+        //$('.overlay').fadeOut();
+    };
+
+    self.sidebar = ko.pureComputed(function () {
+        if (self.showsidebar()) {
+            return "active";
+        }
+        else {
+            return "inactive";
+        }
+
+    });
 
 };
 
+
+// Here's a custom Knockout binding that makes elements shown/hidden via jQuery's fadeIn()/fadeOut() methods
+ko.bindingHandlers.fadeVisible = {
+    init: function (element, valueAccessor) {
+        // Initially set the element to be instantly visible/hidden depending on the value
+        var value = valueAccessor();
+        $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+    },
+    update: function (element, valueAccessor) {
+        // Whenever the value subsequently changes, slowly fade the element in or out
+        var value = valueAccessor();
+        ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
+    }
+};
 
 /*
  * custom binding to bind the google map object
@@ -145,8 +157,8 @@ ko.bindingHandlers.map = {
 
                 position: marker.position,
                 title: marker.title,
-                map: mapObj.googleMap
-
+                map: mapObj.googleMap,
+                //animation: google.maps.Animation.DROP,
             });
 
             model.mapMarkers[index].markerobj = mapObj.marker;
@@ -156,11 +168,13 @@ ko.bindingHandlers.map = {
                 infowindow.setOptions({
                     content: '<div> <h3>' + marker.title + '</h3><p>' + marker.info + '</p></div>',
                     position: marker.position,
-                    maxWidth: 200
-                });
+                    maxWidth: 200,
 
+                });
+                marker.markerobj.setAnimation(google.maps.Animation.DROP);
                 infowindow.open(mapObj.googleMap, this);
                 model.currentmarker(marker);
+
             });
 
 

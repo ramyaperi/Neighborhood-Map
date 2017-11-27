@@ -13,7 +13,7 @@
 
 <!-- Page Content -->
 <p id="errormessage" data-bind="text: errormessage"></p>
-<nav id="sidebar">
+<nav id="sidebar" data-bind="css: sidebar">
     <div id="dismiss" data-bind="click:mapselected">
         <i class="glyphicon glyphicon-arrow-left"></i>
     </div>
@@ -39,7 +39,7 @@
         data-bind="click:menuselected">
 </button>
 
-<div class="overlay" data-bind="click:mapselected"></div>
+<div id="overlay" class="overlay" data-bind='click:mapselected , fadeVisible:showsidebar'></div>
 <!--Map div with custom binding   -->
 <div id="map" data-bind="map:mapView"></div>
 <div class="row-fluid">
